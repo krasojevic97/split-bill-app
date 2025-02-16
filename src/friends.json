@@ -1,0 +1,32 @@
+{
+    "friends": [
+      {
+        "id":1,
+        "name": "John",
+        "surname": "Doe",
+        "image": "/friendsImages/John.jpg",
+        "amountOwed": -10
+      },
+      {
+        "id":2,
+        "name": "Jane",
+        "surname": "Smith",
+        "image": "/friendsImages/Xiang.jpg",
+        "amountOwed": 0
+      },
+      {
+        "id":3,
+        "name": "Mark",
+        "surname": "Taylor",
+        "image": "/friendsImages/Mark.jpg",
+        "amountOwed": 0
+      },
+      {
+        "id":4,
+        "name": "Emily",
+        "surname": "Johnson",
+        "image": "/friendsImages/Emily.jpg",
+        "amountOwed": 0
+      }
+    ]
+  }

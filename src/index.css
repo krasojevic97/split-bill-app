@@ -1,0 +1,224 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  font-family: 'Poppins','Open-Sans',sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 2em;
+  min-height: 100vh;
+  background: linear-gradient(45deg, rgb(90, 167, 94), rgb(177, 246, 183));
+}
+/* For the entire scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the vertical scrollbar */
+  height: 12px; /* Height of the horizontal scrollbar */
+  position: absolute;
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light gray background */
+  border-radius: 10px; /* Rounded corners */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Gray color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker gray on hover */
+}
+
+/* Corner (where vertical and horizontal scrollbars meet) */
+::-webkit-scrollbar-corner {
+  background: #f1f1f1; /* Match the track color */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.app{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: max-content;
+  gap: 2em;
+}
+
+.app-container{
+  display:flex;
+  gap:1em;
+  flex-direction:column;
+  height:fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  border-radius: 10px;
+  background: linear-gradient(45deg, rgb(249, 126, 18), rgb(161, 231, 9));
+  box-shadow: 0 0 1em;
+}
+
+.friends-display {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100vh;
+  margin: 0 auto;
+  overflow: auto;
+  height: 70vh;
+}
+
+.friend-display{
+  width: 100%;
+  display: flex;
+  border-radius: 8px;
+  padding: 2em;
+  margin-bottom: 10px;
+  height: fit-content;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2em;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.friend-select-btn{
+  align-self: center;
+  padding: .5em;
+  border-radius: 10px;
+  font-size: 1em;
+  border: none;
+  box-shadow: 0 0 2px;
+  transition:.2s ease;
+}
+
+.friend-select-btn:hover{
+  cursor: pointer;
+  background-color: #b32626;
+  color: white;
+}
+
+.add-friend-btn{
+  font-size: 1.2em;
+  max-width: 300px;
+  min-width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 5px;
+  background-color: aliceblue;
+  transition: 0.15s ease-in;
+}
+
+.add-friend-btn{
+  align-self: center;
+}
+.add-friend-btn:hover{
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+.friend-image {
+  flex-shrink: 0;
+}
+
+.friend-image img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.friend-amount-owned {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.friend-amount-owned h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.friend-amount-owned p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.sidebar{
+  width: 50%;
+  text-align: center;
+}
+
+.add-friend-form{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap:1em;
+  padding: 2em;
+  border-radius: 10px;
+  width: 500px;
+  box-shadow: 0 0 1em;
+  background: linear-gradient(45deg, rgb(239, 224, 16), rgb(102, 217, 1));
+}
+
+.add-friend-form input[type="text"]{
+  font-size: 1.2em;
+  padding: .5em;
+  border-radius: 10px;
+}
+.add-friend-form select{
+  padding: .5em;
+  font-size: 1em;
+  border-radius: 10px;
+}
+
+.form-elems{
+  border: 1px solid black;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.form-elems label{
+  position: relative;
+  top: 12px;
+  left: 10px;
+  background-color: white;
+  width: fit-content;
+  padding: 0 5px;
+}
+
+.selected{
+  background: #397a0b;
+  color: white;
+}
+
+.form-elems input[type="text"]{
+  padding: .8em;
+  font-size: 1em;
+  border-radius: 10px;
+  border: 1px solid; 
+}
+
+.form-elems button{
+  margin-top: 1em;
+}
+.hidden{
+  display: none;
+}
