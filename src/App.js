@@ -1,42 +1,18 @@
 import './App.css';
-import { useState } from 'react';
+import { useState,useEffect} from 'react';
+import axios from 'axios';
 
-
-const friendsList = [
-  {
-    "id":1,
-    "name": "John",
-    "surname": "Doe",
-    "image": "/friendsImages/John.jpg",
-    "amountOwed": -10
-  },
-  {
-    "id":2,
-    "name": "Jane",
-    "surname": "Smith",
-    "image": "/friendsImages/Xiang.jpg",
-    "amountOwed": 0
-  },
-  {
-    "id":3,
-    "name": "Mark",
-    "surname": "Taylor",
-    "image": "/friendsImages/Mark.jpg",
-    "amountOwed": 0
-  },
-  {
-    "id":4,
-    "name": "Emily",
-    "surname": "Johnson",
-    "image": "/friendsImages/Emily.jpg",
-    "amountOwed": 0
-  }
-]
- 
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false);
-  const [friends,setFriends] = useState(friendsList);
+  const [friends,setFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState(null);
+
+  useEffect(()=>{
+    axios.get('http://localhost:5000/api/friends')
+    .then(res=>setFriends(res.data))
+    .catch(err=>console.error(err));
+  },[]);
+
 
   function handleShowAddFriend(){
     setShowAddFriend((show)=>!show);
@@ -44,8 +20,13 @@ function App() {
   }
 
   function handleAddFriend(friend){
-    setFriends((prevFriends)=>[...prevFriends,friend])
-    setShowAddFriend(false);
+    axios.post('http://localhost:5000/api/friends', friend)
+      .then(response => {
+        setFriends((prevFriends) => [...prevFriends, response.data]);
+        setShowAddFriend(false);
+      })
+      .catch(error => console.error('Error adding friend:', error));
+  
   }
 
   function handleSelection(friend){
@@ -57,14 +38,29 @@ function App() {
     setFriends(friends => friends.map(friend => (friend.id===selectedFriend.id ? {...friend , amountOwed: friend.amountOwed + value} : friend)))
     setSelectedFriend((prev) =>
     prev ? { ...prev, amountOwed: prev.amountOwed + value } : null
-  );
+    );
+  }
+
+  function handleRemove(friend){
+    if(friend.amountOwed!==0){
+      alert("You can't remove a friend who has an outstanding balance");
+      return;
+    }else{
+    axios.delete(`http://localhost:5000/api/friends/${friend.id}`)
+        .then(() => {
+          alert(friend.name + " has been removed from your friends list");
+          setFriends(friends => friends.filter(f => f.id !== friend.id));
+          setSelectedFriend(null);
+        })
+        .catch(error => console.error('Error removing friend:', error));
+    }
   }
 
   return (
     <div className="app">
         <div className="app-container">
         <h1 style={{color:"white"}}>Friends List</h1>
-        <Friends friendsList={friends} onSelection={handleSelection} selectedFriend={selectedFriend}/>
+        <Friends friendsList={friends} onSelection={handleSelection} handleRemove={handleRemove} selectedFriend={selectedFriend}/>
         <Button  onClick={handleShowAddFriend}>{showAddFriend ? "Close":"Add Friend"}</Button>
         </div>
         {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend}/>} 
@@ -73,18 +69,18 @@ function App() {
   )
 }
 
-function Friends({friendsList,onSelection,selectedFriend}){
+function Friends({friendsList,onSelection,selectedFriend,handleRemove}){
   return (
       <ul className="friends-display">
           {
-          friendsList.map(friend=>(<Friend onSelection={onSelection} friend={friend} key={friend.id} selectedFriend={selectedFriend}/>))
+            friendsList.map(friend=>(<Friend onSelection={onSelection} onRemove={handleRemove} friend={friend} key={friend.id} selectedFriend={selectedFriend}/>))
           }
       </ul>
   )
 }
 
 
-function Friend({friend,onSelection,selectedFriend}){
+function Friend({friend,onSelection,selectedFriend, onRemove}){
   const isSelected = selectedFriend?.id===friend.id;
   return (
       <li className={`friend-display friend-image ${isSelected ? "selected":""}`} >
@@ -98,7 +94,10 @@ function Friend({friend,onSelection,selectedFriend}){
                 </p>
             </div>
           </div>
+          <div style={{display:"flex",gap:"1em"}}>
           <Button onClick={()=>onSelection(friend)}>{isSelected ? "Close" : "Select"}</Button>
+          <Button onClick={()=>onRemove(friend)}>Remove</Button>
+          </div>
       </li>
   )
 }
@@ -156,7 +155,13 @@ function FormSplitBill({friend,onSplitBill}){
     onSplitBill(whoIsPaying==="you" ? paidByFriend : -paidByUser); 
     console.log(whoIsPaying);
   }
-
+  function saveData(e){
+    e.preventDefault();
+    console.log('bill:',bill);
+    console.log('paidByUser:',paidByUser);
+    console.log('whoIsPaying:',whoIsPaying);
+    
+  }
   function handleSetBill(e){
     const value = parseFloat(e.target.value);
     if(Number.isNaN(value)){

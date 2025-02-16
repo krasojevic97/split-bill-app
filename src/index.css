@@ -70,7 +70,6 @@ code {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-evenly;
   width: 100vh;
   margin: 0 auto;
   overflow: auto;
@@ -194,7 +193,12 @@ code {
   border-radius: 10px;
   width: 100%;
 }
-
+input[type="text"]{
+  border: none;
+}
+form button{
+  margin-top: 1em;
+}
 .form-elems label{
   position: relative;
   top: 12px;
